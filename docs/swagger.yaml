@@ -1,0 +1,60 @@
+info:
+  contact: {}
+  description: This is a sample swagger for Short Hack
+  termsOfService: http://swagger.io/terms/
+  title: Short Hack
+  version: "1.0"
+paths:
+  /skill/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Getting Skill by Id in detail
+      parameters:
+      - description: id of Skill
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Getting Skill by Id
+      tags:
+      - Skills
+  /skill/all/:
+    get:
+      consumes:
+      - application/json
+      description: Getting Skill by Id in detail
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Getting Skill by Id
+      tags:
+      - Skills
+swagger: "2.0"
