@@ -48,6 +48,7 @@ func main() {
 	}
 	skillcontroller.GetSkillById(app, s, ctx)
 	skillcontroller.GetAllSkills(app, s, ctx)
+	skillcontroller.AddSkill(app, s, ctx)
 	fmt.Print(ans)
 	app.Listen(":3000")
 }

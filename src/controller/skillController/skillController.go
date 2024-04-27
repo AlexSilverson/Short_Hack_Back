@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
+	entitySkill "github.com/AlexSilverson/Short_Hack_Back/src/entity/skill"
 	skillservice "github.com/AlexSilverson/Short_Hack_Back/src/service/skillService"
 	"github.com/gofiber/fiber/v2"
 )
@@ -49,9 +50,9 @@ func GetSkillById(app *fiber.App, skillService skillservice.SkillService, ctx co
 //	@Failure		400				{string}	string
 //	@Failure		404				{string}	string
 //	@Success		200				{string}	string
-//	@Router			/skill/all/ [get]
+//	@Router			/skills [get]
 func GetAllSkills(app *fiber.App, skillService skillservice.SkillService, ctx context.Context) fiber.Router {
-	return app.Get("/skill/all/", func(c *fiber.Ctx) error {
+	return app.Get("/skills", func(c *fiber.Ctx) error {
 
 		skills, er := skillService.GetAll(ctx)
 		if er != nil {
@@ -59,5 +60,35 @@ func GetAllSkills(app *fiber.App, skillService skillservice.SkillService, ctx co
 		}
 
 		return c.Status(fiber.StatusOK).JSON(skills)
+	})
+}
+
+// AddSkill
+//
+//	@Summary		Adding Skill
+//	@Tags			Skills
+//	@Accept			json
+//	@Produce		json
+//	@Param			request			body		entitySkill.Skill	true	"Request of Creating Skill Object"
+//	@Failure		400				{string}	string
+//	@Failure		404				{string}	string
+//	@Success		200				{string}	string
+//	@Router			/skill [post]
+func AddSkill(app *fiber.App, skillService skillservice.SkillService, ctx context.Context) fiber.Router {
+	return app.Post("/skill", func(c *fiber.Ctx) error {
+		var skill entitySkill.Skill
+
+		err := c.BodyParser(&skill)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON("Skill format is not valid")
+		}
+
+		err = skillService.AddSkill(skill, ctx)
+		if err == nil {
+			return c.Status(fiber.StatusOK).JSON("added")
+		} else {
+			return c.Status(fiber.StatusBadRequest).JSON(err)
+		}
+
 	})
 }
